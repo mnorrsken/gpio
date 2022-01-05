@@ -65,7 +65,6 @@ func export(pin int) {
 	if writeErr != nil {
 		log.Panic(writeErr)
 	}
-	time.Sleep(time.Millisecond * 10)
 }
 
 func unexport(pin int) {
@@ -93,6 +92,12 @@ func PinMode(pin int, val int) {
 
 	if !exported {
 		export(pin)
+	}
+
+	// wait until the pin is exported
+	for !exported {
+		exported = pinExported(pin)
+		time.Sleep(time.Millisecond * 10)
 	}
 
 	_, exists := gpioPins[pinName]
