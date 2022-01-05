@@ -94,10 +94,12 @@ func PinMode(pin int, val int) {
 		export(pin)
 	}
 
-	// wait until the pin is exported
-	for !exported {
-		exported = pinExported(pin)
-		time.Sleep(time.Millisecond * 10)
+	// try for a second to see if it is exported
+	for i := 0; i < 50; i++ {
+		if exported = pinExported(pin); exported {
+			break
+		}
+		time.Sleep(20 * time.Millisecond)
 	}
 
 	_, exists := gpioPins[pinName]
