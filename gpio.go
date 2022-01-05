@@ -29,6 +29,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 // OUTPUT is ...
@@ -64,6 +65,7 @@ func export(pin int) {
 	if writeErr != nil {
 		log.Panic(writeErr)
 	}
+	time.Sleep(time.Millisecond * 10)
 }
 
 func unexport(pin int) {
