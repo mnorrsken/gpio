@@ -88,14 +88,9 @@ func PinMode(pin int, val int) {
 	pinName := strconv.Itoa(pin)
 
 	exported := pinExported(pin)
-	if val == OUTPUT {
-		if !exported {
-			export(pin)
-		}
-	} else {
-		if exported {
-			unexport(pin)
-		}
+
+	if !exported {
+		export(pin)
 	}
 
 	_, exists := gpioPins[pinName]
